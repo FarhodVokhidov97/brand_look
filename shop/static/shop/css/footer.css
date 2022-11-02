@@ -1,0 +1,94 @@
+.list-pages {
+	text-align: center;
+	margin: 0 0 20px 0;
+    width: 100%;
+}
+
+.list-pages ul {
+	margin: 20px 0 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.list-pages ul li {
+	display: inline-block;
+	margin: 0 20px 0 0;
+    background-color: rgb(104, 4, 199);
+}
+
+.list-pages a {
+	color: #000;
+	font-size: 24px;
+	text-decoration: none;
+}
+
+.list-pages .page-number, .page-number-selected {
+	display: inline-block;
+	width: 60px;
+	height: 44px;
+	padding: 8px 0 0 0;
+	border: 1px solid #d0d0d0;
+	border-radius: 30px;
+}
+
+.list-pages .page-number:hover {
+	background-color: rgb(252, 215, 6);
+}
+
+.list-pages .page-number-selected {
+	border: none;
+	color: #000;
+	font-size: 20px;
+    background-color: rgb(255, 255, 255);
+}
+
+.list-pages .page-number-selected:hover {
+	box-shadow: none; 
+}
+
+/* Footer знизу */
+
+.footer-site{
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background: rgb(0, 0, 0);
+	color: white;
+}
+
+.footer-site > .container{
+	justify-content: space-between;
+	align-items: center;
+}
+
+.widget-social li{
+	list-style: none;
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.widget-social li a:hover{
+	color: rgb(255, 255, 255) !important;
+}
+
+.forceup{
+	text-align: left;
+}
+.social{
+	margin-bottom: 10px;
+	font-size: 16px;
+	font-weight: bold;
+}
+.infofooter{
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+}
+@media screen and (max-width:992px) {
+	.list-pages .page-number, .page-number-selected {
+		width: 30px;
+		font-size: 12px;
+	}
+	.list-pages ul li {
+		margin: 0 10px 0 0;
+	}
+}

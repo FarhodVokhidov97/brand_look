@@ -1,0 +1,105 @@
+.size-img{
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+}
+.alingcenter{
+    text-align: center;
+    border-collapse: collapse;
+    margin: 5px;
+}
+.myshop{
+    margin: 30px;
+    font-size:50px;
+    text-align: center;
+}
+.color{
+    color: black;
+    text-align: center;
+}
+.colorhref{
+    color: rgb(255, 255, 255);
+    border: solid;
+    background-color: #1fad0c;
+    border: 10px solid #1fad0c;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+.colortable1{
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+.colortable2{
+    background-color: rgb(255, 255, 255);
+    max-height: 100px;
+}
+.text-right{
+    margin: 20px;
+    text-align: right;
+}
+
+.empty-cart{
+    text-align: center;
+}
+/*Таблиця Корзини*/
+.cell{
+    display: inline-table;
+    padding: 5px;
+    color: white;
+}
+.product_name{
+    padding: 0 15px;
+    text-align: left;
+}
+.headercolor{
+    background-color: black;
+    
+}
+@media screen and (max-width:992px){
+    .mobila{
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 30px;
+        background-color: black;
+        color: white;
+    }
+    .headercolor{
+        display: none;
+    }
+    .delete_order{
+        order: 1;
+        padding: 0;
+        text-align: center;
+    }
+    .colortable2{
+        text-align: left;
+    }
+    .colortable2 td{
+        padding: 10px 0;
+    }
+    .p{
+        font-size: 18px;
+    }
+    .myshop{
+        text-align: center;
+        color: white;
+    }
+    .quantity-wrapper{
+        margin-left: 20px;
+    }
+    .color{
+        color: white;
+        text-align: center;
+    }
+    .main_color{
+        background-color: black;
+    }
+    .text-right{
+        color: white;
+    }
+}
+@media screen and (min-width:993px) {
+    .p{
+        display: none;
+    }
+}

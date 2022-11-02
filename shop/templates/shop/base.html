@@ -1,0 +1,138 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk-ua">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width" />
+    {% block css-files %}{% endblock %}
+    <script src="https://kit.fontawesome.com/8abd8374d8.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'shop/css/default.css' %}" />
+    <link rel="stylesheet" href="{% static 'shop/css/header.css' %}" />
+    <link rel="stylesheet" href="{% static 'shop/css/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'shop/css/footer.css' %}" />
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<div class="page-wrapper">
+    <header class="header">
+        <div class="container">
+            <div class="logo-wrapper">
+                <a href="{% url 'product_list' %}" class="nav-link"><img class="logo-img" src="{% static 'shop/img/2.png' %}" alt=""></a>
+            </div>
+            <div class="search-wrapper">
+                <form action="{% url 'product_list' %}" method="get">
+                    <input name="q" class="search-input" type="input" placeholder="Поиск...">
+                    <button class="search-buttton">Найты</button>
+                </form>
+            </div>
+            <div class="nav-list-wrapper">
+                <div class="menu_icon ">
+                    <span></span>
+                </div>
+                <nav class="menu_body ">
+                    <ul class="menu_list">
+                        {% if request.user.is_authenticated %}
+                            <li class="nav-list-item">
+                                <a href="{% url 'cart:cart_detail' %}" class="nav-link">
+                                    <h2 class="cart-product-number">{% if cart_product_number %} {{ cart_product_number }} {% endif %}</h2>
+                                    <i class="fa-solid fa-cart-shopping fa-lg"></i>
+                                </a>
+                            </li>
+                            <li class="nav-list-item">
+                                {% if user.is_staff %}
+                                    <a class="nav-link" style="background-color: #5b5b5b;margin-right: 10px;padding: 5px" href="/admin">Войти а админку</a>
+                                {% endif %}
+                                {{ user.username }} | <a href="{% url 'logout' %}" class="nav-link">Выйти</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-list-item">
+                                <a href="{% url 'cart:cart_detail' %}" class="nav-link">
+                                    <i class="fa-regular fa-user fa-lg"></i>
+                                </a>
+                            </li>
+                            <li class="nav-list-item">
+                                <a href="{% url 'cart:cart_detail' %}" class="nav-link">
+                                    <h2 class="cart-product-number">{% if cart_product_number %} {{ cart_product_number }} {% endif %}</h2>
+                                    <i class="fa-solid fa-cart-shopping fa-lg"></i>
+                                </a>
+                            </li>
+                            <li class="nav-list-item">
+                                <a href="{% url 'login' %}" class="nav-link">Войти</a> | <a href="{% url 'register' %}" class="nav-link">Регистрация</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <div class="burger_categories"></div>
+                </nav>
+            </div>
+        </div>
+        <div class="korable">
+            <p><i class=""> BrandLook</i></p>
+        </div>
+    </header>
+    <main class="main_color">
+        {% block content %}
+        {% endblock %}
+        {% if page_obj.has_other_pages %}
+            <nav class="list-pages">
+                <ul>
+                    {% if page_obj.has_previous %}
+                        <li class="page-number">
+                            <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+                        </li>
+                    {% endif %}
+                    {% for p in paginator.page_range %}
+                        {% if page_obj.number ==  p %}
+                            <li class="page-number page-number-selected">
+                                <a href="?page={{ p }}">{{ p }}</a>
+                            </li>
+                        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                            <li class="page-number">
+                                <a href="?page={{ p }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ p }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li class="page-number">
+                            <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    </main>
+    <footer class="footer-site">
+        <div class="container">
+            <div class="logo-wrapper">
+                <a href="{% url 'product_list' %}" class="nav-link"><img class="logo-img" src="{% static 'shop/img/2.png' %}" alt=""></a>
+                <div class="infofooter">
+                    <p>Наши контакты</p>
+                    <p>+375 (25) 761 75 37</p>
+                </div>
+            </div>
+            <div>
+                <p  class="social">Мы в соцсетях</p><br>
+                <ul class="widget-social">
+                    <li>
+                        <a href="#"><i class="fa-brands fa-instagram fa-2xl"></i></a>
+                    </li>
+                    <li>
+                        <a href=""><i class="fa-brands fa-facebook fa-2xl"></i></a>
+                    </li>
+                    <li>
+                        <a href=""><i class="fa-brands fa-twitter fa-2xl"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    {% block js-filles %}{% endblock %}
+{#    <script type="text/javascript" src="{% static 'shop/js/jquery.js' %}"></script>#}
+{#    <script type="text/javascript" src="{% static 'shop/js/script.js' %}"></script>#}
+    <script type="text/javascript" src = "{% static 'shop/js/script.js' %}"></script>
+    <script type="text/javascript" src = "{% static 'shop/js/jquery.js' %}"></script>
+</div>
+</body>
+</html>

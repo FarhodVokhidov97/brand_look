@@ -1,0 +1,93 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block css-files %}
+    <link rel="stylesheet" href="{% static "shop/css/slider.css" %}">
+    <link rel="stylesheet" href="{% static "shop/css/about-goods.css" %}">
+
+{% endblock %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+
+{% block content %}
+    
+<main>
+    <div class="container">
+        <div class="product-column">
+            <div class="left-column">
+                <div class="description">
+                    <h1>{{ product.name }}</h1>
+                    <div class="product-price">
+                        <p>{{ product.price }} BYN</p>
+                        <form action="{% url "cart:cart_add" product.pk %}" method="post">
+                            <div class="quantity-wrapper">
+                                <p style="display: none;">{{ cart_product_form.quantity }}</p>
+                            </div>
+                            {% csrf_token %}
+                            <button type="submit" class="cart-btn">Купить</button>
+                        </form>
+                    </div>
+                    <input type="checkbox" class="read-more-checker" id="read-more-checker" />
+                    <div class="limited l-200">
+                        <p class="product-description">{{ product.description}}</p>
+                        <div class="bottom"></div>
+                    </div>
+                    <label for="read-more-checker" class="read-more-button"></label>
+                </div>
+            </div>
+            <div class="right-column">
+                <div class="slider-container">
+                    <div class="some-block">
+                        <button class="Right"><i class="fa-solid fa-chevron-left fa-2xl"></i></button>
+                    </div>
+                    <div class="slider">
+                        <img class="slide-img" src="{% if product.main_image %}{{ product.main_image.url }}{% endif %}" alt="">
+                        {% for el in product_image %}
+                            <img class="slide-img img_slik" src="{% if el.image %}{{ el.image.url }}{% endif %}" alt="">
+                        {% endfor %}
+                    </div>
+                    <div class="some-block">
+                        <button class="Left"><i class="fa-solid fa-chevron-right fa-2xl"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-column">
+            <div class="left-column">
+                <p class="characteristic-label">Характеристика</p>
+                <div class="product-characteristics">
+                    {% for c in characteristics %}
+                        <div class="product-characteristics-row">
+                            <div class="product-characteristics-item"><p>{{ c.name }}</p></div>
+                            <div class="product-characteristics-item"><p>{{ c.value }}</p></div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="right-column">
+                <p class="similar-products-label">Похожие товары</p>
+                <div class="similar-products">
+                    {% if similar_products %}
+                        {% for el in similar_products %}
+                            <div class="similar-product-wrapper">
+                                <div class="similar-product-img">
+                                    <a href="{{ el.get_absolute_url }}">
+                                        <img src="{% if el.main_image %}{{ el.main_image.url }}{% endif %}" alt="">
+                                    </a>
+                                </div>
+                                <p>{{ el.name }}</p>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% block js-filles %}
+    <script type="text/javascript" src="{% static 'shop/js/script.js' %}"></script>
+{% endblock %}

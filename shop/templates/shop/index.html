@@ -1,0 +1,52 @@
+{% extends 'shop/base.html' %}
+{% load shop_tags %}
+{% load static %}
+{% block title %}
+    Brand Look
+{% endblock %}
+
+{% block content %}
+    {% get_cats as categories %}
+    <div class="container">
+        {% show_categories cat_selected=cat_selected %}
+        <div class="products-table">
+            {% if products %}
+                {% for el in products %}
+                    <div class="card">
+                        <div class="product-card">
+                            {% if el.old_price %}<div class="badge">Скидка!</div> {% endif %}
+                            <div class="product-tumb">
+                                {% if el.main_image %}
+                                    <a href="{{ el.get_absolute_url }}">
+                                        <img src="{{ el.main_image.url }}" class="product-card-image" alt="">
+                                    </a>
+                                {% endif %}
+                            </div>
+                            <div class="product-details">
+                                <span class="product-category">{{ el.category }}</span>
+                                <h4><a href="{{ el.get_absolute_url }}">{{ el.name }}</a></h4>
+                                <p>{{ el.description }}</p>
+                                <div class="product-bottom-details">
+                                    <div class="product-price">{{ el.price }}BYN</div>
+                                    <div class="product-links">
+                                        <input type="hidden" name="product_id" value="{{ el.id }}">
+                                        {{ cart_product_form.update }}
+                                        {% csrf_token %}
+                                        <button onclick="put_on_cart({{ el.id }});"type="submit"  class="add-to-cart-button {% if el.id in cart_products_id %}added-to-cart{% endif %}">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </button>
+                                        <!-- <button class="add-to-cart-button">
+                                            <i class="fa fa-heart"></i>
+                                        </button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Товар пока не существует</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

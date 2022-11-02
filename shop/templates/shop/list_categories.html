@@ -1,0 +1,11 @@
+<div class="products-nav">
+    <ul>
+        <li {% if cat_selected %}class="category-nav-item"{% else %} class="category-nav-selected" {% endif %}>
+            <a class="category-nav-link" href="{% url "product_list" %}">Все товары</a></li>
+        {% for c in cats %}
+            <li {% if cat_selected == c.id %} class="category-nav-selected" {% else %} class="category-nav-item" {% endif %}>
+                <a class="category-nav-link" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

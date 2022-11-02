@@ -1,0 +1,69 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block css-files %} 
+    <link rel="stylesheet" href="{% static 'cart/css/cart.css' %}" />
+{% endblock %}
+
+{% block title %}
+  Корзина покупок
+{% endblock %}
+
+
+{% block content %}
+  <p class="myshop">Корзина</p>
+  {% if cart %}
+    <table  class="alingcenter" width="99%" > 
+      <thead>
+      <tr class="headercolor">
+        <td><div class="cell">удалить</div></td>
+        <td><div class="cell">Фото</div></td>
+        <td><div class="cell">Товар</div></td>
+        <td><div class="cell">Количество</div></td>
+        <td><div class="cell">Цена за штук</div></td>
+        <td><div class="cell">Обшая сума</div></td>
+      </tr>
+      
+      </thead>
+      <tbody class="colortable2">
+        {% for item in cart %}
+          {% with product=item.product %}
+            <tr class="mobila">
+              <td class="delete_order"><a class="color" href="{% url 'cart:cart_remove' product.id %}"><i class="fa-solid fa-trash-can"></i></a></td>
+              <td class="image_order">
+                <a href="{{ product.get_absolute_url }}">
+                  <img class="size-img" src="{% if product.main_image %}{{ product.main_image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+                </a>
+              </td>
+              <td><div class="product_name">{{ product.name }}</div></td>
+              <td>
+                <form  action="{% url 'cart:cart_add' product.id %}" method="post">
+                  <div class="quantity-wrapper">
+                    <div class="quantity">
+                      {{ item.update_quantity_form.quantity }}
+                    </div>
+                </div>
+                  {{ item.update_quantity_form.update }}
+                  {% csrf_token %}
+                </form>
+              </td>
+              <td><p class="p">Цeна за шт:</p>{{ item.price }}BYN.</td>
+              <td ><p class="p">Обшая сумма сума:</p>
+                {{ item.total_price }}BYN.</p></td>
+            </tr>
+          {% endwith %}
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="text-right">
+      <td ><p class="text-right">До оплати: {{ cart.get_total_price }}BYN.</p></td>
+      <a class="colorhref" href="{% url 'order_create' %}" class="button">Оформить заказ </a>
+    </div>
+    <hr><br><br>
+  {% else %}
+    <h1 class="empty-cart">Ващ корзина пусто!</h1>
+  {% endif %}
+{% endblock %}
+{% block js-files %} 
+<script src="{% static 'cart/js/cart.js' %}" crossorigin="anonymous"></script> 
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block css-files %} 
+    <link rel="stylesheet" href="{% static 'orders/css/orders.css' %}" />
+{% endblock %}
+
+{% block title %}Оформление заказов{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="order-form" style="margin: 0 auto;">
+        <form method="post">
+            <div class="order-form-item">
+                {% csrf_token %}
+            </div>
+            {% for f in form %}
+            <div class="order-form-item">
+                {{ f }}
+                <div class="form-error">
+                    {{ f.errors }}
+                </div>
+            </div>
+            {% endfor %}
+            <button class="order-button" type="submit">Оформити заказ</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
